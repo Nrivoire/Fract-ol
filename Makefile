@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/06/14 18:19:22 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2019/07/29 04:57:23 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/07/29 07:00:52 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -20,8 +20,10 @@ NAME = fractol
 
 #	Sources
 # SRC_SUP = {dossiers dans src qui seront separe par une virgule}
+SRC_SUP = cplx
 SRC_PATH = src
 SRC_NAME = main.c\
+		   ft_absolu.c\
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

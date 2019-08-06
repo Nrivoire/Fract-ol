@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:21 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/06 04:37:44 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/06 05:02:45 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,8 @@ int				main(int av, char **ac)
 		ft_error("struct t_mlx ft_memalloc error");
 	v->mlx->mlx_ptr = mlx_init();
 	v->mlx->win_ptr = mlx_new_window(v->mlx->mlx_ptr, WIDTH, HEIGHT, "fractol");
-	mandelbrot(v);
+	//mandelbrot(v);
+	julia(v);
 	//mlx_key_hook(v->mlx->win_ptr, key_press, v);
 	mlx_hook(v->mlx->win_ptr, 17, (1L << 17), &red_cross, v);
 	mlx_loop(v->mlx->mlx_ptr);

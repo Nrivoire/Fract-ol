@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   mandelbrot.c                                     .::    .:/ .      .::   */
+/*   julia.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/08/06 04:31:43 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/06 05:05:09 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/08/06 04:50:23 by nrivoire     #+#   ##    ##    #+#       */
+/*   Updated: 2019/08/06 05:04:47 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double		make_mandel(double a, double b, t_scaling tmp, double color)
+double		make_julia(double a, double b, t_scaling tmp, double color)
 {
 	int			n;
 	t_cplx		cplx;
@@ -24,8 +24,8 @@ double		make_mandel(double a, double b, t_scaling tmp, double color)
 	while (n < max_iteration)
 	{
 		cplx = ft_cplx(a, b);
-		a = cplx.reel + tmp.a;
-		b = cplx.im + tmp.b;
+		a = cplx.reel + (-0.8);
+		b = cplx.im + 0.156;
 		if (ft_absolu((a * a) + (b * b)) > 16) //est-ce nos cplx se rapprochent de l'infini?
 			break;
 		n++;
@@ -37,7 +37,7 @@ double		make_mandel(double a, double b, t_scaling tmp, double color)
 	return (color);
 }
 
-void			mandelbrot(t_env *v)
+void			julia(t_env *v)
 {
 	int			x;
 	int			y;
@@ -52,7 +52,7 @@ void			mandelbrot(t_env *v)
 		while (y++ < WIDTH)
 		{
 			map = ft_scaling(v, x, y);
-			color = make_mandel(map.a, map.b, map, color);
+			color = make_julia(map.a, map.b, map, color);
 			ft_pixel_put(v->mlx->img, x, y, make_rgb(color, color, color, 1));
 		}
 	}

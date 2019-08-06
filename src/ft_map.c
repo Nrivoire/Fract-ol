@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   scaling.c                                        .::    .:/ .      .::   */
+/*   ft_map.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/08/06 04:43:52 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/06 04:45:17 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/08/06 04:34:35 by nrivoire     #+#   ##    ##    #+#       */
+/*   Updated: 2019/08/06 05:08:18 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_scale			scaling(double s1, double st1, double s2, double st2)
+double		ft_map(double var, t_mapping s)
 {
-	t_scale		scale;
+	double	result;
 
-	scale.start1 = s1;
-	scale.stop1 = st1;
-	scale.start2 = s2;
-	scale.stop2 = st2;
-	return (scale);
+	result = s.start2 + (s.stop2 - s.start2) * \
+			((var - s.start1) / (s.stop1 - s.start1));
+	return (result);
 }

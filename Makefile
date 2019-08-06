@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/06/14 18:19:22 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2019/08/05 22:52:00 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/08/06 04:47:25 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -24,9 +24,9 @@ SRC_SUP = cplx
 SRC_PATH = src
 SRC_NAME = main.c\
 		   get_next_line.c ft_error.c\
+		   mandelbrot.c ft_mapping.c ft_cplx.c scaling.c\
 		   cplx/ft_absolu.c\
 		   cplx/ft_create_img.c\
-		   cplx/ft_make_cplx.c\
 		   cplx/ft_pixel_put.c\
 		   cplx/make_rgb.c\
 

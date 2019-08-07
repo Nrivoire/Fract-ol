@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/06/14 18:19:22 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2019/08/06 05:10:45 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/08/07 00:50:45 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -22,14 +22,10 @@ NAME = fractol
 # SRC_SUP = {dossiers dans src qui seront separe par une virgule}
 SRC_SUP = cplx
 SRC_PATH = src
-SRC_NAME = main.c\
-		   get_next_line.c ft_error.c\
-		   mandelbrot.c ft_scaling.c ft_cplx.c data_mapping.c ft_map.c\
-		   julia.c\
-		   ft_absolu.c\
-		   ft_create_img.c\
-		   ft_pixel_put.c\
-		   make_rgb.c\
+SRC_NAME = main.c ft_create_img.c ft_pixel_put.c ft_cplx.c\
+		   get_next_line.c ft_error.c ft_absolu.c  make_rgb.c\
+		   ft_scaling.c data_mapping.c ft_map.c\
+		   julia.c mandelbrot.c\
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 

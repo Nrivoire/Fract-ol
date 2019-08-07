@@ -6,27 +6,27 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/06 04:50:23 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/06 05:04:47 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/07 01:11:37 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double		make_julia(double a, double b, t_scaling tmp, double color)
+double		make_julia(t_env *v, double reel, double im, double color)
 {
 	int			n;
-	t_cplx		cplx;
+	t_scaling	scale;
 	int			max_iteration;
 
 	n = 0;
 	max_iteration = 30;
 	while (n < max_iteration)
 	{
-		cplx = ft_cplx(a, b);
-		a = cplx.reel + (-0.8);
-		b = cplx.im + 0.156;
-		if (ft_absolu((a * a) + (b * b)) > 16) //est-ce nos cplx se rapprochent de l'infini?
+		scale = ft_scaling(reel, im);
+		reel = scale.a + v->const_reel;
+		im = scale.b + v->const_im;
+		if (ft_absolu((reel * reel) + (im * im)) > 16)
 			break;
 		n++;
 	}
@@ -42,17 +42,19 @@ void			julia(t_env *v)
 	int			x;
 	int			y;
 	double		color;
-	t_scaling	map;
+	t_cplx		cplx;
 
 	x = -1;
+	v->const_reel = -0.8;
+	v->const_im = 0.156;
 	ft_create_img(v->mlx->mlx_ptr, &v->mlx->img, WIDTH, HEIGHT);
 	while(x++ < HEIGHT)
 	{
 		y = -1;
 		while (y++ < WIDTH)
 		{
-			map = ft_scaling(v, x, y);
-			color = make_julia(map.a, map.b, map, color);
+			cplx = ft_cplx(v, x, y);
+			color = make_julia(v, cplx.reel, cplx.im, color);
 			ft_pixel_put(v->mlx->img, x, y, make_rgb(color, color, color, 1));
 		}
 	}

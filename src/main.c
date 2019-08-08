@@ -6,60 +6,39 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:21 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/07 03:13:24 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/08 05:45:50 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double		mouv_make_julia(t_env *v, double reel, double im, double color)
+void		free_env(t_env *v)
 {
-	int			n;
-	t_scaling	scale;
-	int			max_iteration;
-
-	n = 0;
-	max_iteration = 30;
-	while (n < max_iteration)
+	if (v)
 	{
-		scale = ft_scaling(reel, im);
-		reel = scale.a + v->const_reel;
-		im = scale.b + v->const_im;
-		if (ft_absolu((reel * reel) + (im * im)) > 16)
-			break;
-		n++;
-	}
-	color = ft_map(n, data_mapping(0, max_iteration, 0, 1));
-	color = ft_map(sqrt(color), data_mapping(0, 1, 0, 255));
-	if (n == max_iteration)
-		color = 0;
-	return (color);
-}
-
-void			mouv_julia(t_env *v)
-{
-	int			x;
-	int			y;
-	double		color;
-	t_cplx		cplx;
-
-	x = -1;
-	ft_create_img(v->mlx->mlx_ptr, &v->mlx->img, WIDTH, HEIGHT);
-	while(x++ < HEIGHT)
-	{
-		y = -1;
-		while (y++ < WIDTH)
+		if (v->mlx)
 		{
-			cplx = ft_cplx(v, x, y);
-			color = make_julia(v, cplx.reel, cplx.im, color);
-			ft_pixel_put(v->mlx->img, x, y, make_rgb(color, color, color, 1));
+			if (v->mlx->mlx_ptr)
+				free(v->mlx->mlx_ptr);
+			if (v->mlx->win_ptr)
+				free(v->mlx->win_ptr);
+			free(v->mlx);
+		}
+		if (v->img)
+		{
+			if (v->img->ptr)
+				free(v->img->ptr);
+			if (v->img->img_tmp)
+				free(v->img->img_tmp);
+			if (v->img->img)
+				free(v->img->img);
+			free(v->img);
 		}
 	}
-	mlx_put_image_to_window(v->mlx, v->mlx->win_ptr, v->mlx->img.ptr, 0, 0);
 }
 
-void			key_mouv_julia(t_env *v, int keycode)
+void			mouv_julia(t_env *v, int keycode)
 {
 	double		c;
 
@@ -71,7 +50,24 @@ void			key_mouv_julia(t_env *v, int keycode)
 	v->const_im += c;
 	mlx_clear_window(v->mlx->mlx_ptr, v->mlx->win_ptr);
 	ft_create_img(v->mlx->mlx_ptr, &v->mlx->img, WIDTH, HEIGHT);
-	mouv_julia(v);
+	julia(v);
+	mlx_put_image_to_window(v->mlx, v->mlx->win_ptr, v->mlx->img.ptr, 0, 0);
+}
+
+void			more_iteration(t_env *v, int keycode)
+{
+	int			i;
+
+	if (keycode == I)
+		i = 20;
+	else
+		i = -20;
+	v->max_i += i;
+	if (v->max_i == 0)
+		v->max_i = 20;
+	mlx_clear_window(v->mlx->mlx_ptr, v->mlx->win_ptr);
+	ft_create_img(v->mlx->mlx_ptr, &v->mlx->img, WIDTH, HEIGHT);
+	julia(v);
 	mlx_put_image_to_window(v->mlx, v->mlx->win_ptr, v->mlx->img.ptr, 0, 0);
 }
 
@@ -79,13 +75,15 @@ int				key_press(int keycode, t_env *v)
 {
 	if (keycode == ESC)
 	{
-		//free_env(v);
+		free_env(v);
 		exit(0);
 	}
 	if (keycode)
 		v->key[keycode] = 1;
 	if (keycode == MORE || keycode == LESS)
-		key_mouv_julia(v, keycode);
+		mouv_julia(v, keycode);
+	if (keycode == I || keycode == O)
+		more_iteration(v, keycode);
 	return (0);
 }
 
@@ -96,9 +94,9 @@ int			key_release(int keycode, t_env *v)
 	return (0);
 }
 
-int			red_cross()//t_env *v)
+int			red_cross(t_env *v)
 {
-	//free_env(v);
+	free_env(v);
 	exit(0);
 	return (0);
 }
@@ -115,6 +113,9 @@ int				main(int av, char **ac)
 		ft_error("struct t_env ft_memalloc error");
 	v->min = -2;
 	v->max = 2;
+	v->const_reel = -0.4;
+	v->const_im = 0.6;
+	v->max_i = 100;
 	if (!(v->mlx = ft_memalloc(sizeof(t_mlx))))
 		ft_error("struct t_mlx ft_memalloc error");
 	v->mlx->mlx_ptr = mlx_init();

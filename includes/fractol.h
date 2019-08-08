@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:43 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/07 03:07:36 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/08 05:06:52 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,6 +79,7 @@ typedef struct		s_env
 	double			const_reel;
 	double			const_im;
 	int				key[269];
+	int				max_i;
 	t_mlx			*mlx;
 	t_mlx_img		*img;
 }					t_env;

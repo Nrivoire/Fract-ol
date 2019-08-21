@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/13 16:51:20 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/24 22:42:01 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 15:32:06 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,12 @@
 # define LIBFT_H
 
 # define BUF_SIZE 1
+# define BUFF_SIZE 128
 
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/types.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
@@ -87,6 +92,7 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
+int					ft_absolu(int nb);
 size_t				ft_strlen(char const *str);
 int					*ft_range(int min, int max);
 size_t				ft_strspn(const char *s, const char *accept);
@@ -107,5 +113,7 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_print_lst(t_list *elem);
+
+int					get_next_line(const int fd, char **line);
 
 #endif

@@ -6,12 +6,12 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/27 13:27:22 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/29 04:59:56 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 15:31:31 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
 static char			*ft_static(char *tmp, char *lf_ov)
 {

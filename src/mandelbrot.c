@@ -6,14 +6,14 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/06 04:31:43 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/08 05:39:12 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 15:23:39 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double		make_mandel(double reel, double im, t_cplx cplx, double color)
+double		make_mandel(double real, double im, t_cplx cplx, double color)
 {
 	int			n;
 	t_scaling	scale;
@@ -23,10 +23,10 @@ double		make_mandel(double reel, double im, t_cplx cplx, double color)
 	max_iteration = 30;
 	while (n < max_iteration)
 	{
-		scale = ft_scaling(reel, im);
-		reel = scale.a + cplx.reel;
+		scale = ft_scaling(real, im);
+		real = scale.a + cplx.real;
 		im = scale.b + cplx.im;
-		if (ft_absolu((reel * reel) + (im * im)) > 110)
+		if (ft_absolu((real * real) + (im * im)) > 110)
 			break;
 		n++;
 	}
@@ -45,15 +45,14 @@ void			mandelbrot(t_env *v)
 	t_cplx		cplx;
 
 	x = -1;
-	ft_create_img(v->mlx->mlx_ptr, &v->mlx->img, WIDTH, HEIGHT);
 	while(x++ < HEIGHT)
 	{
 		y = -1;
 		while (y++ < WIDTH)
 		{
 			cplx = ft_cplx(v, x, y);
-			color = make_mandel(cplx.reel, cplx.im, cplx, color);
-			ft_pixel_put(v->mlx->img, x, y, make_rgb(color / 16, color, color, 1));
+			color = make_mandel(cplx.real, cplx.im, cplx, color);
+			ft_pixel_put(v->mlx->img, x, y, color);
 		}
 	}
 	mlx_put_image_to_window(v->mlx, v->mlx->win_ptr, v->mlx->img.ptr, 0, 0);

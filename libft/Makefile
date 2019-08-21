@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/04 11:42:11 by vasalome     #+#   ##    ##    #+#        #
-#    Updated: 2019/07/23 03:59:05 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/08/21 15:30:48 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -42,6 +42,8 @@ SRC = ft_putchar.c ft_putchar_fd.c\
 	  ft_print_bits.c\
 	  ft_strspn.c ft_strcspn.c\
 	  ft_stractrim.c ft_occur.c ft_sqrt.c ft_error.c\
+	  ft_absolu.c\
+	  get_next_line.c\
 
 #	Output
 NAME = libft.a

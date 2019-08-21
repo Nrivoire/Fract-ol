@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/06/14 18:19:22 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2019/08/07 00:50:45 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/08/21 16:28:31 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -20,14 +20,12 @@ NAME = fractol
 
 #	Sources
 # SRC_SUP = {dossiers dans src qui seront separe par une virgule}
-SRC_SUP = cplx
+SRC_SUP = my_mlx
 SRC_PATH = src
-SRC_NAME = main.c ft_create_img.c ft_pixel_put.c ft_cplx.c\
-		   get_next_line.c ft_error.c ft_absolu.c  make_rgb.c\
-		   ft_scaling.c data_mapping.c ft_map.c\
+SRC_NAME = main.c ft_error.c ft_map.c ft_cplx.c\
+		   my_mlx/ft_create_img.c\
+		   my_mlx/ft_pixel_put.c\
 		   julia.c mandelbrot.c\
-
-SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
 #	Objects
 OBJ_PATH = .objects
@@ -36,14 +34,17 @@ OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 #	Includes
 INC_PATH = includes
+INC_NAME = fractol.h keys.h
+INC = $(addprefix $(INC_PATH)/,$(INC_NAME))
+
 CPPFLAGS = -I $(INC_PATH)
 LDFLAGS = -L libft #-g3 -fsanitize=address
 LDLIBS = -lft
-MINILIBX = -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
+MINILIBX = -I includes -I minilibx_macos -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
 
 #	Compiler
 CC = clang
-CFLAGS = -Wall -Wextra -I. #-g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -I. #-g3 -fsanitize=address
 
 ################
 ##   COLORS   ##
@@ -85,18 +86,19 @@ $(NAME): $(OBJ)
 libft.a:
 	@make -C ./libft/
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	@mkdir -p $(OBJ_PATH) $(OBJ_PATH)/$(SRC_SUP)
-	@$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $<
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INC)
+	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)/$(SRC_SUP)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 	@printf "\r$(YELLOW)$(BOLD)[COMPILE] $(END) $(<:.c=)..."
 
 clean:
-	@make -C ./libft/ clean
+	@make -C libft clean
 	@rm -rf $(OBJ_PATH)
 	@printf "$(BLUE)> Deleted : $(RED)$(OBJ_PATH)$(END)\n"
 
 fclean: clean
-	@make -C ./libft/ fclean
+	@make -C libft fclean
 	@rm -rf $(NAME)
 	@printf "$(BLUE)> Deleted : $(RED)$(NAME)$(END)\n"
 

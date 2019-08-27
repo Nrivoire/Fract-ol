@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:21 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/27 11:33:51 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/27 15:27:45 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,7 +67,12 @@ void			more_iteration(t_env *v, int keycode)
 		v->max_i = 100;
 	mlx_clear_window(v->mlx->mlx_ptr, v->mlx->win_ptr);
 	ft_create_img(v->mlx->mlx_ptr, &v->mlx->img, WIDTH, HEIGHT);
-	julia(v);
+	if (v->fractal == 0)
+		mandelbrot(v);
+	else if (v->fractal == 1)
+		julia(v);
+	else if (v->fractal == 2)
+		burning_ship(v);
 	mlx_put_image_to_window(v->mlx, v->mlx->win_ptr, v->mlx->img.ptr, 0, 0);
 }
 
@@ -81,6 +86,8 @@ void			change_color(t_env *v, int keycode)
 		mandelbrot(v);
 	else if (v->fractal == 1)
 		julia(v);
+	else if (v->fractal == 2)
+		burning_ship(v);
 }
 
 int				key_press(int keycode, t_env *v)
@@ -148,6 +155,12 @@ int				motion_notify(int x, int y, t_env *v)
 	return (0);
 }
 
+int				zoom_wheel(int x, int y, t_env *v)
+{
+	
+	return (0);
+}
+
 void			initialisation(t_env *v)
 {
 	v->min = -2;
@@ -189,6 +202,7 @@ int				main(int av, char **ac)
 	mlx_hook(v->mlx->win_ptr, 2, 0, key_press, v);
 	mlx_key_hook(v->mlx->win_ptr, key_release, v);
 	mlx_hook(v->mlx->win_ptr, 6, (1L<<6), motion_notify, v);
+	mlx_hook(v->mlx->win_ptr, 4, (1L<<2), zoom_wheel, v);
 	mlx_hook(v->mlx->win_ptr, 17, (1L << 17), red_cross, v);
 	mlx_loop(v->mlx->mlx_ptr);
 	return (0);

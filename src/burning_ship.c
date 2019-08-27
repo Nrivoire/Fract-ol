@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   julia.c                                          .::    .:/ .      .::   */
+/*   burning_ship.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/08/06 04:50:23 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/27 11:35:05 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/08/27 11:32:20 by nrivoire     #+#   ##    ##    #+#       */
+/*   Updated: 2019/08/27 11:58:21 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int				make_color_julia(int n, t_env *v)
+int				make_color_ship(int n, t_env *v)
 {
 	long		longue;
 	int			red;
@@ -27,7 +27,7 @@ int				make_color_julia(int n, t_env *v)
 	return (longue);
 }
 
-double			make_julia(t_env *v, double real, double im)
+double			make_burning_ship(t_env *v, double real, double im, t_cplx cplx)
 {
 	int			n;
 	t_scaling	scale;
@@ -38,21 +38,21 @@ double			make_julia(t_env *v, double real, double im)
 	while (++n < v->max_i)
 	{
 		scale = ft_scaling(real, im);
-		real = scale.a + v->const_real;
-		im = scale.b + v->const_im;
-		if (ft_absolu((real * real) + (im * im)) > 16)
+		real = scale.a + cplx.real;
+		im = scale.b + cplx.im;
+		if (ft_absolu((real * real) + (im * im)) > 4)
 			break ;
 	}
 	pos = ft_map(n, data_mapping(0, v->max_i, 0, 1));
 	color = ft_map(sqrt(pos), data_mapping(0, 1, 0, 255));
 	color = color * v->gradient_scale + v->gradient_shift % 2048;
-	color = make_color_julia(n, v);
+	color = make_color_ship(n, v);
 	if (n == v->max_i)
 		color = 0;
 	return (color);
 }
 
-void			julia(t_env *v)
+void			burning_ship(t_env *v)
 {
 	int			x;
 	int			y;
@@ -68,7 +68,7 @@ void			julia(t_env *v)
 		while (y++ < WIDTH)
 		{
 			cplx = ft_cplx(v, x, y);
-			color = make_julia(v, cplx.real, cplx.im);
+			color = make_burning_ship(v, cplx.real, cplx.im, cplx);
 			ft_pixel_put(v->mlx->img, x, y, color);
 		}
 	}

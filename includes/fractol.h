@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:43 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 16:17:21 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/27 11:35:48 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,6 +23,10 @@
 # include <math.h>
 # include <stdlib.h>
 # include <fcntl.h>
+
+
+#include <stdio.h>
+
 
 # define KEYPRESS					2
 # define KEYRELEASE					3
@@ -130,6 +134,11 @@ typedef struct		s_env
 	double			max;
 	double			const_real;
 	double			const_im;
+	int				gradient_scale;
+	int				gradient_shift;
+	int				color_lenght;
+	int				fractal;
+	double			frequency;
 	int				key[269];
 	int				max_i;
 	int				rgb;
@@ -146,7 +155,10 @@ t_mapping			data_mapping(double s1, double st1, double s2, double st2);
 double				ft_map(double var, t_mapping s);
 t_cplx				ft_cplx(t_env *v, int x, int y);
 
-double				make_julia(t_env *v, double a, double b, double color);
+void				refresh_display(t_env *v);
+void				change_color(t_env *v, int keycode);
+double				make_julia(t_env *v, double a, double b);
+void				burning_ship(t_env *v);
 void				julia(t_env *v);
 void				mandelbrot(t_env *v);
 

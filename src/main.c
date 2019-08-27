@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:21 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 16:23:47 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/27 11:33:51 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,11 +64,23 @@ void			more_iteration(t_env *v, int keycode)
 		i = -20;
 	v->max_i += i;
 	if (v->max_i == 0)
-		v->max_i = 20;
+		v->max_i = 100;
 	mlx_clear_window(v->mlx->mlx_ptr, v->mlx->win_ptr);
 	ft_create_img(v->mlx->mlx_ptr, &v->mlx->img, WIDTH, HEIGHT);
 	julia(v);
 	mlx_put_image_to_window(v->mlx, v->mlx->win_ptr, v->mlx->img.ptr, 0, 0);
+}
+
+void			change_color(t_env *v, int keycode)
+{
+	if (keycode == NB_1)
+		v->frequency += 0.1;
+	else
+		v->frequency -= .01;
+	if (v->fractal == 0)
+		mandelbrot(v);
+	else if (v->fractal == 1)
+		julia(v);
 }
 
 int				key_press(int keycode, t_env *v)
@@ -86,7 +98,23 @@ int				key_press(int keycode, t_env *v)
 	if ((keycode == I && ft_strcmp(v->arg, "Julia") == 0) || 
 			(keycode == O && ft_strcmp(v->arg, "Julia") == 0))
 		more_iteration(v, keycode);
+	if (keycode == NB_1 || keycode == NB_2)
+		change_color(v, keycode);
 	return (0);
+}
+
+void		refresh_display(t_env *v)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (++i < HEIGHT)
+	{
+		j = -1;
+		while (++j < WIDTH)
+			ft_pixel_put(v->mlx->img, j, i, 0);
+	}
 }
 
 int				key_release(int keycode, t_env *v)
@@ -127,6 +155,10 @@ void			initialisation(t_env *v)
 	v->const_real = 0.285;
 	v->const_im = 0;
 	v->max_i = 100;
+	v->gradient_scale = 256;
+	v->gradient_shift = 0;
+	v->color_lenght = 2048;
+	v->frequency = 7.12;
 }
 
 int				main(int av, char **ac)
@@ -135,7 +167,7 @@ int				main(int av, char **ac)
 	int			fd;
 
 	if (av != 2)
-		ft_error("usage : ./fractol [fractal : Mandelbrot , Julia]");
+		ft_error("usage : ./fractol [fractal : Mandelbrot , Julia, Burning_ship]");
 	fd = open(ac[1], O_RDONLY);
 	if (!(v = ft_memalloc(sizeof(t_env))))
 		ft_error("struct t_env ft_memalloc error");
@@ -150,10 +182,10 @@ int				main(int av, char **ac)
 		julia(v);
 	else if (ft_strcmp(ac[1], "Mandelbrot") == 0)
 		mandelbrot(v);
-	//else if (ft_strcmp(ac[1], "Sierpinski") == 0)
-	//	sierpinski(v);
+	else if (ft_strcmp(ac[1], "Burning_ship") == 0)
+		burning_ship(v);
 	else
-		ft_error("usage : ./fractol [fractal : Mandelbrot , Julia]");
+		ft_error("usage : ./fractol [fractal : Mandelbrot , Julia, Burning_ship]");
 	mlx_hook(v->mlx->win_ptr, 2, 0, key_press, v);
 	mlx_key_hook(v->mlx->win_ptr, key_release, v);
 	mlx_hook(v->mlx->win_ptr, 6, (1L<<6), motion_notify, v);

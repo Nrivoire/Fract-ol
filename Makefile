@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/06/14 18:19:22 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2019/08/21 16:28:31 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/08/27 11:36:11 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -25,7 +25,7 @@ SRC_PATH = src
 SRC_NAME = main.c ft_error.c ft_map.c ft_cplx.c\
 		   my_mlx/ft_create_img.c\
 		   my_mlx/ft_pixel_put.c\
-		   julia.c mandelbrot.c\
+		   julia.c mandelbrot.c burning_ship.c\
 
 #	Objects
 OBJ_PATH = .objects
@@ -44,7 +44,7 @@ MINILIBX = -I includes -I minilibx_macos -L minilibx_macos -lmlx -framework Open
 
 #	Compiler
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -I. #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -I. #-g3 -fsanitize=address
 
 ################
 ##   COLORS   ##
@@ -81,7 +81,7 @@ all: libft.a $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(LDFLAGS) $(MINILIBX) $(LDLIBS) $^ -o $@
-	@printf "\n$(ERASE)$(BLUE)> $@ : $(GREEN)Success !$(END)\n\n"
+	@printf "\n$(BLUE)> $@ : $(GREEN)Success !$(END)\n\n"
 
 libft.a:
 	@make -C ./libft/

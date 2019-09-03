@@ -6,7 +6,7 @@
 #    By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/06/14 18:19:22 by nrivoire     #+#   ##    ##    #+#        #
-#    Updated: 2019/08/27 11:36:11 by nrivoire    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/09/03 18:17:15 by nrivoire    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -22,10 +22,11 @@ NAME = fractol
 # SRC_SUP = {dossiers dans src qui seront separe par une virgule}
 SRC_SUP = my_mlx
 SRC_PATH = src
-SRC_NAME = main.c ft_error.c ft_map.c ft_cplx.c\
+SRC_NAME = main.c ft_error.c map.c ft_cplx.c\
 		   my_mlx/ft_create_img.c\
 		   my_mlx/ft_pixel_put.c\
 		   julia.c mandelbrot.c burning_ship.c\
+		   key_event.c mouse_event.c\
 
 #	Objects
 OBJ_PATH = .objects
@@ -44,7 +45,7 @@ MINILIBX = -I includes -I minilibx_macos -L minilibx_macos -lmlx -framework Open
 
 #	Compiler
 CC = clang
-CFLAGS = -Wall -Wextra -I. #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -O3 -I. #-g3 -fsanitize=address
 
 ################
 ##   COLORS   ##
@@ -105,4 +106,4 @@ fclean: clean
 re: fclean all
 
 norme:
-	norminette $(SRC) $(INC_PATH)
+	norminette $(SRC_PATH) $(INC_PATH)

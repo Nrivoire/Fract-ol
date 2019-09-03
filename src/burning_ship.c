@@ -6,28 +6,14 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/27 11:32:20 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/27 15:21:30 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/03 18:18:58 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-// int				make_color_ship(int n, t_env *v)
-// {
-// 	long		longue;
-// 	int			red;
-// 	int			blue;
-// 	int			green;
-
-// 	red = sin(v->frequency * (n % 16) + 0) * 127 + 128;
-// 	green = sin(v->frequency * (n % 16) + 2) * 127 + 128;
-// 	blue = sin(v->frequency * (n % 16) + 4) * 127 + 128;
-// 	longue = blue * 65536 + green * 256 + red;
-// 	return (longue);
-// }
-
-int				make_burning_ship(t_env *v, double old_real, double old_im, t_cplx cplx)
+int				make_burning_ship(t_env *v, double o_r, double o_i, t_cplx cplx)
 {
 	int			n;
 	double		pos;
@@ -38,19 +24,16 @@ int				make_burning_ship(t_env *v, double old_real, double old_im, t_cplx cplx)
 	n = -1;
 	new_real = 0;
 	new_im = 0;
-	while (++n < v->max_i)
+	while (++n < v->max_i && fabs(new_real * new_real + new_im * new_im) < 16)
 	{
-		old_real = new_real;
-		old_im = new_im;
-		new_real = fabs(old_im * old_im - old_real * old_real + cplx.real);
-		new_im = fabs(2 * old_real * old_im + cplx.im);
-		if (fabs(new_im * new_im + new_real * new_real) > 16)
-			break ;
+		o_r = new_real;
+		o_i = new_im;
+		new_real = fabs(o_i * o_i - o_r * o_r + cplx.real);
+		new_im = fabs(2 * o_r * o_i + cplx.im);
 	}
-	pos = ft_map(n, data_mapping(0, v->max_i, 0, 1));
-	color = ft_map(sqrt(pos), data_mapping(0, 1, 0, 255));
+	pos = map(n, data_mapping(0, v->max_i, 0, 1));
+	color = map(sqrt(pos), data_mapping(0, 1, 0, 255));
 	color = color * v->gradient_scale + v->gradient_shift % v->color_lenght;
-	//color = make_color_ship(n, v);
 	if (n == v->max_i)
 		color = 0;
 	return (color);

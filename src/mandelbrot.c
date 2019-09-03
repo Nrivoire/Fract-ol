@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/06 04:31:43 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/27 13:50:11 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/03 16:08:12 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,26 +30,21 @@ int				make_color(int n, t_env *v)
 int				make_mandel(t_env *v, double real, double im, t_cplx cplx)
 {
 	int			n;
-	t_scaling	scale;
-	int			max_iteration;
 	double		pos;
 	int			color;
+	double		tmp;
 
 	n = -1;
-	max_iteration = 100;
-	while (++n < max_iteration)
+	while (++n < v->max_i && ft_absolu(real * real + im * im) < 4)
 	{
-		scale = ft_scaling(real, im);
-		real = scale.a + cplx.real;
-		im = scale.b + cplx.im;
-		if (ft_absolu((real * real) + (im * im)) > 16)
-			break ;
+		tmp = 2 * real * im;
+		real = real * real - im * im + cplx.real;
+		im = tmp + cplx.im;
 	}
-	pos = ft_map(n, data_mapping(0, max_iteration, 0, 1));
-	color = ft_map(sqrt(pos), data_mapping(0, 1, 0, 255));
+	pos = map(n, data_mapping(0, v->max_i, 0, 1));
+	color = map(sqrt(pos), data_mapping(0, 1, 0, 255));
 	color = color * v->gradient_scale + v->gradient_shift % v->color_lenght;
-	color = make_color(n, v);
-	if (n == max_iteration)
+	if (n == v->max_i)
 		color = 0;
 	return (color);
 }
@@ -61,13 +56,13 @@ void			mandelbrot(t_env *v)
 	int			color;
 	t_cplx		cplx;
 
-	x = -1;
+	y = -1;
 	v->fractal = 0;
 	refresh_display(v);
-	while (x++ < HEIGHT)
+	while (++y < HEIGHT)
 	{
-		y = -1;
-		while (y++ < WIDTH)
+		x = -1;
+		while (++x < WIDTH)
 		{
 			cplx = ft_cplx(v, x, y);
 			color = make_mandel(v, cplx.real, cplx.im, cplx);

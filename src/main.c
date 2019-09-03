@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:21 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/03 18:22:02 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/03 19:18:44 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,10 +54,6 @@ void			refresh_display(t_env *v)
 
 void			initialisation(t_env *v)
 {
-	v->min_real = -2;
-	v->max_real = 2;
-	v->min_im = -2;
-	v->max_im = 2;
 	v->const_real = 0.285;
 	v->const_im = 0;
 	v->max_i = 100;
@@ -68,6 +64,7 @@ void			initialisation(t_env *v)
 	v->zoom = 1;
 	v->x = -2;
 	v->y = -2;
+	v->j = 0;
 }
 
 void			make_mlx_hook(t_env *v)
@@ -75,7 +72,7 @@ void			make_mlx_hook(t_env *v)
 	mlx_hook(v->mlx->win_ptr, 2, 0, key_press, v);
 	mlx_key_hook(v->mlx->win_ptr, key_release, v);
 	mlx_hook(v->mlx->win_ptr, 6, (1L << 6), motion_notify, v);
-	mlx_hook(v->mlx->win_ptr, 4, (1L << 2), zoom_wheel, v);
+	mlx_hook(v->mlx->win_ptr, 4, (1L << 2), button_event, v);
 	mlx_hook(v->mlx->win_ptr, 17, (1L << 17), red_cross, v);
 	mlx_loop(v->mlx->mlx_ptr);
 }
@@ -86,7 +83,7 @@ int				main(int av, char **ac)
 	int			fd;
 
 	if (av != 2)
-		ft_error("usage : ./fractol [fractal : mandelbrot,julia,burning_ship]");
+		ft_error("usage: ./fractol [fractal : mandelbrot,julia,burning_ship]");
 	fd = open(ac[1], O_RDONLY);
 	if (!(v = ft_memalloc(sizeof(t_env))))
 		ft_error("struct t_env ft_memalloc error");
@@ -104,7 +101,7 @@ int				main(int av, char **ac)
 	else if (ft_strcmp(ac[1], "burning_ship") == 0)
 		burning_ship(v);
 	else
-		ft_error("usage : ./fractol [fractal : mandelbrot,julia,burning_ship]");
+		ft_error("usage: ./fractol [fractal : mandelbrot,julia,burning_ship]");
 	make_mlx_hook(v);
 	return (0);
 }

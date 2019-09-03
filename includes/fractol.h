@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:43 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/03 18:16:04 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/03 19:17:32 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -126,17 +126,12 @@ typedef struct		s_scaling
 
 typedef struct		s_env
 {
-	double			min_real;
-	double			max_real;
-	double			min_im;
-	double			max_im;
-
 	double			zoom;
 	double			x;
 	double			y;
-
 	double			const_real;
 	double			const_im;
+	int				j;
 	int				gradient_scale;
 	int				gradient_shift;
 	int				color_lenght;
@@ -154,20 +149,20 @@ void				free_env(t_env *v);
 void				ft_error(char *str);
 void				ft_create_img(void *ptr, t_mlx_img *img, int w, int h);
 void				ft_pixel_put(t_mlx_img img, int x, int y, int color);
+void				refresh_display(t_env *v);
+
 t_scaling			ft_scaling(double x, double y);
 t_mapping			data_mapping(double s1, double st1, double s2, double st2);
 double				map(double var, t_mapping s);
 t_cplx				ft_cplx(t_env *v, int x, int y);
 
-void				refresh_display(t_env *v);
-void				change_color(t_env *v, int keycode);
 void				burning_ship(t_env *v);
 void				julia(t_env *v);
 void				mandelbrot(t_env *v);
 
-int					zoom_wheel(int button, int x, int y, t_env *v);
+void				zoom_wheel(int button, int x, int y, t_env *v);
+int					button_event(int button, int x, int y, t_env *v);
 int					motion_notify(int x, int y, t_env *v);
-double				make_julia(t_env *v, double a, double b);
 
 int					red_cross(t_env *v);
 int					key_release(int keycode, t_env *v);

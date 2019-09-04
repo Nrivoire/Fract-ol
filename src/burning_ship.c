@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/27 11:32:20 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/03 18:18:58 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/04 15:58:42 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,13 +46,14 @@ void			burning_ship(t_env *v)
 	int			color;
 	t_cplx		cplx;
 
-	x = -1;
+	y = -1;
 	v->fractal = 2;
+	v->gradient_scale = 256;
 	refresh_display(v);
-	while (x++ < HEIGHT)
+	while (++y < HEIGHT)
 	{
-		y = -1;
-		while (y++ < WIDTH)
+		x = -1;
+		while (++x < WIDTH)
 		{
 			cplx = ft_cplx(v, x, y);
 			color = make_burning_ship(v, cplx.real, cplx.im, cplx);

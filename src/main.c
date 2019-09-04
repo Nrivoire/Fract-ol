@@ -6,7 +6,7 @@
 /*   By: nrivoire <nrivoire@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/29 04:56:21 by nrivoire     #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/03 19:18:44 by nrivoire    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/04 15:58:24 by nrivoire    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,11 +80,9 @@ void			make_mlx_hook(t_env *v)
 int				main(int av, char **ac)
 {
 	t_env		*v;
-	int			fd;
 
 	if (av != 2)
 		ft_error("usage: ./fractol [fractal : mandelbrot,julia,burning_ship]");
-	fd = open(ac[1], O_RDONLY);
 	if (!(v = ft_memalloc(sizeof(t_env))))
 		ft_error("struct t_env ft_memalloc error");
 	initialisation(v);
